@@ -36,7 +36,12 @@
         env: 'demo',
         origin: window.location.origin,
       });
-      const paymentRequestButton = Airwallex.createElement('paymentRequestButton');
+      const paymentRequestButton = Airwallex.createElement('paymentRequestButton', {
+        intent: { // Required, dropIn use intent Id and client_secret to prepare checkout
+          id: 'replace-with-your-intent-id',
+          client_secret: 'replace-with-your-client-secret'
+        }
+      });
       paymentRequestButton.mount('paymentRequestButton');
     </script>
     <hr>
