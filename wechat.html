@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head lang='en'>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <title>Airwallex Checkout Playground</title>
+
+    <style>
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        font-weight: 300;
+      }
+      h1 {
+        text-align: center;
+      }
+      h2 {
+        padding-top: 24px;
+      }
+      label {
+        padding: 12px;
+        display: block;
+      }
+      div {
+        padding: 12px;
+      }
+    </style>
+    <script src="https://checkout.airwallex.com/assets/bundle.0.0.82.min.js"></script>
+  </head>
+  <body>
+    <h1>Airwallex checkout integration</h1>
+    <!-- Wechat integration-->
+    <h1>Wechat integration</h1>
+    <div id='wechat'></div>
+    <script>
+      Airwallex.init({
+        env: 'demo',
+        origin: window.location.origin,
+      });
+      const wechat = Airwallex.createElement('wechat', {
+        intent: {
+          id: 'replace-with-your-intent-id',
+          client_secret: 'replace-with-your-client-secret'
+        }
+      });
+      wechat.mount('wechat');
+      window.addEventListener('onSuccess', (event) => {
+        /*
+          ... Handle event
+        */
+        alert(JSON.stringify(event.detail));
+      })
+    </script>
+  </body>
+</html>

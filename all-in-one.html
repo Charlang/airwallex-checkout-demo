@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head lang='en'>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Airwallex Checkout Playground</title>
+
+    <style>
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        font-weight: 300;
+      }
+      h1 {
+        text-align: center;
+      }
+      h2 {
+        padding-top: 24px;
+      }
+      label {
+        padding: 12px;
+        display: block;
+      }
+      div {
+        padding: 12px;
+      }
+    </style>
+    <script src="https://checkout-staging.airwallex.com/assets/bundle.0.0.83.min.js"></script>
+  </head>
+  <body>
+    <h1>Airwallex checkout integration</h1>
+    <hr>
+    <!-- HPP -->
+    <h2>Option #1: Hosted payment page (HPP) integration</h2>
+    <button id='hpp'>Redirect to HPP</button>
+    <script>
+      const intentId = 'int_g1cBPRhDzdGFnjKKyzkbg8CXfwg';
+      const client_secret = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTkyODgxODUsImV4cCI6MTU5OTI5MTc4NSwiYWNjb3VudF9pZCI6IjM0OWZhYWQ5LTYzZGEtNDg3MS05YTVhLWIyYTIxNjViNTNiNiIsImRhdGFfY2VudGVyX3JlZ2lvbiI6IlVLIiwiaW50ZW50X2lkIjoiaW50X2cxY0JQUmhEemRHRm5qS0t5emtiZzhDWGZ3ZyJ9.TQUe3jtEHYziXhAtDL5409MpHUBduCiVdruMMAyVncU';
+      document.getElementById('hpp').addEventListener('click', () => {
+        Airwallex.redirectToCheckout({
+          env: 'staging',
+          intentId: intentId,
+          client_secret
+        });
+      })
+    </script>
+    <hr>
+    <!-- DropIn integration-->
+    <h2>Option #2: DropIn integration</h2>
+    <div id='dropIn'></div>
+    <script>
+      Airwallex.init({
+        env: 'staging',
+        origin: window.location.origin,
+      });
+      const dropIn = Airwallex.createElement('dropIn', {
+        intent: {
+          id: intentId,
+          client_secret
+        }
+      });
+      dropIn.mount('dropIn');
+    </script>
+    <hr>
+    <!-- Card integration-->
+    <h2>Option #3: Card integration</h2>
+    <div id='card'></div>
+    <script>
+      Airwallex.init({
+        origin: window.location.origin,
+        env: 'staging'
+      });
+      const card = Airwallex.createElement('card', {
+        intent: {
+          id: intentId,
+          client_secret
+        }
+      });
+      card.mount('card');
+    </script>
+    <hr>
+    <!-- Card elements integration-->
+    <h2>Option #4: Card elements integration</h2>
+    <label>
+      Card number
+      <div id='cardNumber'></div>
+    </label>
+    <label>
+      Expiry
+      <div id='expiry'></div>
+    </label>
+    <label>
+      CVC
+      <div id='cvc'></div>
+    </label>
+    <br>
+    <button id='submit'>Submit</button>
+    <script>
+      Airwallex.init({
+        env: 'staging',
+        origin: window.location.origin,
+      });
+      const cardNumber = Airwallex.createElement('cardNumber');
+      const expiry = Airwallex.createElement('expiry');
+      const cvc = Airwallex.createElement('cvc');
+      cardNumber.mount('cardNumber');
+      expiry.mount('expiry');
+      cvc.mount('cvc');
+      document.getElementById('submit').addEventListener('click', () => {
+        Airwallex.confirmPaymentIntent({
+          element: cardNumber,
+          intentId,
+          client_secret
+        }).then((response) => {
+          /* handle confirm response */
+          alert(JSON.stringify(response));
+        });
+      });
+    </script>
+    <script>
+      window.addEventListener('onSuccess', (event) => {
+        /*
+          ... Handle event
+        */
+        alert(JSON.stringify(event.detail));
+      })
+    </script>
+    <hr>
+  </body>
+</html>
