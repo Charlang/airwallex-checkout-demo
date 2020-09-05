@@ -25,7 +25,7 @@
         padding: 12px;
       }
     </style>
-    <script src="https://checkout-staging.airwallex.com/assets/bundle.0.0.83.min.js"></script>
+    <script src="https://checkout-staging.airwallex.com/assets/bundle.0.0.84.min.js"></script>
   </head>
   <body>
     <h1>Airwallex checkout integration</h1>
@@ -34,12 +34,12 @@
     <h2>Option #1: Hosted payment page (HPP) integration</h2>
     <button id='hpp'>Redirect to HPP</button>
     <script>
-      const intentId = 'int_g1cBPRhDzdGFnjKKyzkbg8CXfwg';
-      const client_secret = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTkyODgxODUsImV4cCI6MTU5OTI5MTc4NSwiYWNjb3VudF9pZCI6IjM0OWZhYWQ5LTYzZGEtNDg3MS05YTVhLWIyYTIxNjViNTNiNiIsImRhdGFfY2VudGVyX3JlZ2lvbiI6IlVLIiwiaW50ZW50X2lkIjoiaW50X2cxY0JQUmhEemRHRm5qS0t5emtiZzhDWGZ3ZyJ9.TQUe3jtEHYziXhAtDL5409MpHUBduCiVdruMMAyVncU';
+      const id = 'replace-with-your-intent-id';
+      const client_secret = 'replace-with-your-client-secret';
       document.getElementById('hpp').addEventListener('click', () => {
         Airwallex.redirectToCheckout({
           env: 'staging',
-          intentId: intentId,
+          id,
           client_secret
         });
       })
@@ -55,7 +55,7 @@
       });
       const dropIn = Airwallex.createElement('dropIn', {
         intent: {
-          id: intentId,
+          id,
           client_secret
         }
       });
@@ -72,7 +72,7 @@
       });
       const card = Airwallex.createElement('card', {
         intent: {
-          id: intentId,
+          id,
           client_secret
         }
       });
@@ -109,7 +109,7 @@
       document.getElementById('submit').addEventListener('click', () => {
         Airwallex.confirmPaymentIntent({
           element: cardNumber,
-          intentId,
+          id,
           client_secret
         }).then((response) => {
           /* handle confirm response */

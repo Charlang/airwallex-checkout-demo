@@ -5,7 +5,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>Airwallex Checkout Playground</title>
     <!-- Step #1: Load Checkout Universal Module Definition (UMD) bundle js-->
-    <script src="https://checkout.airwallex.com/assets/bundle.0.0.83.min.js"></script>
+    <script src="https://checkout-staging.airwallex.com/assets/bundle.0.0.84.min.js"></script>
   </head>
   <body>
     <h1>DropIn integration</h1>
@@ -13,7 +13,7 @@
     <script>
       // Step #2: Initialize the Airwallex global context for event communication
       Airwallex.init({
-        env: 'demo', // Setup which env('staging' | 'demo' | 'prod') you would like to integrate with
+        env: 'staging', // Setup which env('staging' | 'demo' | 'prod') you would like to integrate with
         origin: window.location.origin, // Setup your event target to receive the browser events message
       });
       // Step #3: Create 'dropIn' element
